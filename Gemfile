@@ -4,4 +4,6 @@ source "http://rubygems.org"
 gemspec
 gem "nokogiri"
 gem "httparty"
-gem "rspec"
+group :development, :test do
+  gem "rspec"
+end
