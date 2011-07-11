@@ -7,14 +7,13 @@ module Newsparser
 
     def sub_sections(date_str=nil, section="gaa1.htm")
       date_str ||= today_str
-      @link_and_titles = {}
-
-      parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
-        doc.css("#menu1 > option").each do |option|
-          @link_and_titles[option["value"]] = option.content
+      @link_and_titles = returning({}) do |hash|
+        parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
+          doc.css("#menu1 > option").each do |option|
+            hash[option["value"]] = option.content
+          end
         end
       end
-      @link_and_titles
     end
 
     def menu
