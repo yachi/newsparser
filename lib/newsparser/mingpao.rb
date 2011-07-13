@@ -2,7 +2,16 @@ module Newsparser
   class Mingpao < Base
     BASE_URL = "http://news.mingpao.com/"
 
-    def sections
+    def sections(date_str=nil, section="main.htm")
+      result = returning({}) do |hash|
+        parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
+          doc.css("#rlink > a").each do |a_tag|
+            hash[a_tag["href"]] = a_tag.content
+          end
+        end
+      end
+      result.reject!{|k, v| k == "main.htm"}
+      result
     end
 
     def sub_sections(date_str=nil, section="gaa1.htm")
