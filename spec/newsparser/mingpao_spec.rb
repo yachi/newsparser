@@ -10,8 +10,8 @@ describe Newsparser do
       mingpao.stub(:parse_html).and_yield(Nokogiri::HTML(gaa1_htm))
       result = mingpao.sections("20110711", "main.htm")
       # check only keys since values are chinese
-      result.should have_key("gaindex.htm")
-      result.should have_key("gbindex.htm")
+      result.first.should have_key(:link)
+      result.first.should have_value("gaindex.htm")
     end
   end
 

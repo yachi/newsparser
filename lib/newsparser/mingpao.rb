@@ -4,14 +4,17 @@ module Newsparser
 
     def sections(date_str=nil, section="main.htm")
       date_str ||= today_str
-      result = returning({}) do |hash|
+      result = returning([]) do |result|
         parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
           doc.css("#rlink > a").each do |a_tag|
-            hash[a_tag["href"]] = a_tag.content
+            result << returning({}) do |hash|
+              hash[:link] = a_tag["href"]
+              hash[:title] = a_tag.content
+            end
           end
         end
       end
-      result.reject!{|k, v| k == "main.htm"}
+      result.reject!{|x| x[:link] == "main.htm"}
       result
     end
 
