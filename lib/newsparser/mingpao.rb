@@ -3,6 +3,7 @@ module Newsparser
     BASE_URL = "http://news.mingpao.com/"
 
     def sections(date_str=nil, section="main.htm")
+      date_str ||= today_str
       result = returning({}) do |hash|
         parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
           doc.css("#rlink > a").each do |a_tag|
@@ -14,7 +15,7 @@ module Newsparser
       result
     end
 
-    def sub_sections(date_str=nil, section="gaa1.htm")
+    def sub_sections(date_str=nil, section="gaindex.htm")
       date_str ||= today_str
       @link_and_titles = returning({}) do |hash|
         parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
@@ -25,7 +26,19 @@ module Newsparser
       end
     end
 
-    def menu
+    def article(date_str=nil, section="gaa1.htm")
+      date_str ||= today_str
+      result = returning({}) do |result|
+        parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
+          doc.css("h1").each do |h1|
+            result[:title] = h1.content
+          end
+          doc.css("div.content_medium").each do |div|
+            result[:content] ||= []
+            result[:content] << div.content
+          end
+        end
+      end
     end
 
     private

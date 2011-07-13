@@ -25,4 +25,16 @@ describe Newsparser do
       result.should have_key("gaa1.htm")
     end
   end
+
+  describe "#article" do
+    it "returns a hash article title and content" do
+      mingpao = Newsparser::Mingpao.new
+      gaa1_htm = IO.read("spec/htmls/gaa1.htm")
+      mingpao.stub(:parse_html).and_yield(Nokogiri::HTML(gaa1_htm))
+      result = mingpao.article("20110711", "gaa1.htm")
+      # check only keys since values are chinese
+      result.should have_key(:title)
+      result.should have_key(:content)
+    end
+  end
 end
