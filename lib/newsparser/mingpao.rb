@@ -20,10 +20,13 @@ module Newsparser
 
     def sub_sections(date_str=nil, section="gaindex.htm")
       date_str ||= today_str
-      @link_and_titles = returning({}) do |hash|
+      result = returning([]) do |result|
         parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
           doc.css("#menu1 > option").each do |option|
-            hash[option["value"]] = option.content
+            result << returning({}) do |hash|
+              hash[:link] = option["value"]
+              hash[:title] = option.content
+            end
           end
         end
       end
