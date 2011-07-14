@@ -2,6 +2,7 @@ require 'rubygems'
 require 'uri'
 require 'nokogiri'
 require 'httparty'
+require 'iconv'
 
 require "newsparser/version"
 require "newsparser/misc"

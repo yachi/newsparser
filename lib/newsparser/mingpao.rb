@@ -1,11 +1,12 @@
 module Newsparser
   class Mingpao < Base
     BASE_URL = "http://news.mingpao.com/"
+    CHARSET = "big5-hkscs"
 
     def sections(date_str=nil, section="main.htm")
       date_str ||= today_str
       result = returning([]) do |result|
-        parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
+        parse_html(BASE_URL + "#{date_str}/#{section}", {:charset => CHARSET}) do |doc|
           doc.css("#rlink > a").each do |a_tag|
             result << returning({}) do |hash|
               hash[:link] = a_tag["href"]
@@ -21,7 +22,7 @@ module Newsparser
       date_str ||= today_str
       result = returning([]) do |result|
         link = article_link(date_str, section)
-        parse_html(BASE_URL + "#{date_str}/#{link}") do |doc|
+        parse_html(BASE_URL + "#{date_str}/#{link}", {:charset => CHARSET}) do |doc|
           doc.css("#menu1 > option").each do |option|
             result << returning({}) do |hash|
               hash[:link] = option["value"]
@@ -35,13 +36,13 @@ module Newsparser
     def article(date_str=nil, section="gaa1.htm")
       date_str ||= today_str
       result = returning({}) do |result|
-        parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
+        parse_html(BASE_URL + "#{date_str}/#{section}", {:charset => CHARSET}) do |doc|
           doc.css("h1").each do |h1|
             result[:title] = h1.content
           end
           doc.css("div.content_medium").each do |div|
             result[:content] ||= []
-            result[:content] << div.content
+            result[:content] << div.inner_html
           end
         end
       end
@@ -49,7 +50,7 @@ module Newsparser
 
     private
     def article_link(date_str, section)
-      parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
+      parse_html(BASE_URL + "#{date_str}/#{section}", {:charset => CHARSET}) do |doc|
         doc.css("h1 > a").each do |a_tag|
           return a_tag[:href]
         end

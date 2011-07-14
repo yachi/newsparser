@@ -3,7 +3,11 @@ module Newsparser
     include HTTParty
     def parse_html(url, options={}, &block)
       response = self.class.get(url, options)
-      yield(Nokogiri::HTML(response.body))
+      html = response.body
+      if charset = options[:charset]
+        html = Iconv.iconv('utf-8', charset, html).join
+      end
+      yield(Nokogiri::HTML(html))
     end
   end
 end
