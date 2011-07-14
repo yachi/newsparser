@@ -20,7 +20,8 @@ module Newsparser
     def sub_sections(date_str=nil, section="gaindex.htm")
       date_str ||= today_str
       result = returning([]) do |result|
-        parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
+        link = article_link(date_str, section)
+        parse_html(BASE_URL + "#{date_str}/#{link}") do |doc|
           doc.css("#menu1 > option").each do |option|
             result << returning({}) do |hash|
               hash[:link] = option["value"]
@@ -47,6 +48,14 @@ module Newsparser
     end
 
     private
+    def article_link(date_str, section)
+      parse_html(BASE_URL + "#{date_str}/#{section}") do |doc|
+        doc.css("h1 > a").each do |a_tag|
+          return a_tag[:href]
+        end
+      end
+    end
+
     def today_str
       # Treat HKT 5AM as a new day
       (Time.now.utc - 3 * 3600).strftime('%Y%m%d')

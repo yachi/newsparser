@@ -19,8 +19,9 @@ describe Newsparser do
     it "returns a hash with links and titles" do
       mingpao = Newsparser::Mingpao.new
       gaa1_htm = IO.read("spec/htmls/gaa1.htm")
+      mingpao.stub(:article_link).and_return('gaa1.htm')
       mingpao.stub(:parse_html).and_yield(Nokogiri::HTML(gaa1_htm))
-      result = mingpao.sub_sections("20110711", "gaa1.htm")
+      result = mingpao.sub_sections("20110711", "gaindex.htm")
       # check only keys since values are chinese
       result.first.should have_key(:link)
       result.first.should have_value("gaa1.htm")
