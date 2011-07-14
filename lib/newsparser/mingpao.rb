@@ -13,8 +13,7 @@ module Newsparser
             end
           end
         end
-      end
-      result.reject!{|x| x[:link] == "main.htm"}
+      end.reject!{|x| x[:link] == "main.htm"}
       result
     end
 
