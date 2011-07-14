@@ -4,6 +4,8 @@ source "http://rubygems.org"
 gemspec
 gem "nokogiri"
 gem "httparty"
+gem "sinatra"
+gem "yajl-ruby"
 group :development, :test do
   gem "rspec"
 end
