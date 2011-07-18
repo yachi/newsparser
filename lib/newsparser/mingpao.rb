@@ -1,7 +1,7 @@
 module Newsparser
   class Mingpao < Base
     BASE_URL = "http://news.mingpao.com/"
-    CHARSET = "big5-hkscs"
+    CHARSET = "BIG5-HKSCS"
 
     def sections(date_str=nil, section="main.htm")
       date_str ||= today_str
