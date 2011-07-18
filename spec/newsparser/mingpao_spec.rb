@@ -8,7 +8,7 @@ describe Newsparser do
       mingpao = Newsparser::Mingpao.new
       gaa1_htm = IO.read("spec/htmls/gaa1.htm")
       mingpao.stub(:get_url).and_return(gaa1_htm)
-      result = mingpao.sections("20110711", "main.htm")
+      result = mingpao.sections("20110718", "main.htm")
       # check only keys since values are chinese
       result.first.should have_key(:link)
       result.first.should have_value("gaindex.htm")
@@ -21,10 +21,10 @@ describe Newsparser do
       gaa1_htm = IO.read("spec/htmls/gaa1.htm")
       mingpao.stub(:article_link).and_return('gaa1.htm')
       mingpao.stub(:get_url).and_return(gaa1_htm)
-      result = mingpao.sub_sections("20110711", "gaindex.htm")
+      result = mingpao.sub_sections("20110718", "gaindex.htm")
       # check only keys since values are chinese
       result.first.should have_key(:link)
-      result.first.should have_value("gaa1.htm")
+      result.first.should have_value("gaa1h.htm")
     end
   end
 
@@ -33,7 +33,7 @@ describe Newsparser do
       mingpao = Newsparser::Mingpao.new
       gaa1_htm = IO.read("spec/htmls/gaa1.htm")
       mingpao.stub(:get_url).and_return(gaa1_htm)
-      result = mingpao.article("20110711", "gaa1.htm")
+      result = mingpao.article("20110718", "gaa1.htm")
       # check only keys since values are chinese
       result.should have_key(:title)
       result.should have_key(:content)
