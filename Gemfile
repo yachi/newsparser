@@ -11,4 +11,5 @@ group :development, :test do
   gem "rspec"
   gem "racksh"
   gem "awesome_print"
+  gem "hirb"
 end

@@ -2,7 +2,9 @@ $:.unshift './lib'
 require 'rubygems'
 require 'api/server'
 
-if $rack and $rack.env == "development"
+if ENV['RACK_ENV'] == "development"
   require 'awesome_print'
+  require 'hirb'
+  Object.send :include, Hirb::Console
 end
 run Api::Server
