@@ -24,7 +24,7 @@ describe Newsparser do
       result = mingpao.sub_sections("20110718", "gaindex.htm")
       # check only keys since values are chinese
       result.first.should have_key(:link)
-      result.first.should have_value("gaa1h.htm")
+      result.first.should have_value("gaa1.htm")
     end
   end
 

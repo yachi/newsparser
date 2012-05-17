@@ -14,7 +14,9 @@ module Newsparser
             end
           end
         end
-      end.reject!{|x| x[:link] == "main.htm"}
+      end
+      result.shift
+      result.select!{|x| x[:link].match(/\.htm$/)}
       result
     end
 
