@@ -3,3 +3,10 @@ A parser for news sites
 To develop: 1. write code
             2. write tests for your code
             3. run `rake test` to test
+
+
+To have a try:
+server :  $ rackup
+
+console:  $ racksh
+         >> $rack.get '/'

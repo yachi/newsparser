@@ -2,7 +2,8 @@ require 'newsparser'
 require 'newsparser/mingpao'
 
 require 'sinatra/base'
-require 'yajl'
+require 'oj'
+require 'multi_json'
 require 'api/mingpao'
 
 module Api

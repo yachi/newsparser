@@ -4,7 +4,7 @@ module Api
       base.class_eval do
         helpers do
           def render_result
-            Yajl::Encoder.encode @result
+            MultiJson.dump @result
           end
         end
 

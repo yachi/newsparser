@@ -5,7 +5,10 @@ gemspec
 gem "nokogiri"
 gem "httparty"
 gem "sinatra"
-gem "yajl-ruby"
+gem "multi_json"
+gem "oj"
 group :development, :test do
   gem "rspec"
+  gem "racksh"
+  gem "awesome_print"
 end
