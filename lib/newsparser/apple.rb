@@ -24,6 +24,26 @@ module Newsparser
       #end
     end
 
+    def sub_sections(section)
+      path = "/#{section}/index/#{date_str}/"
+      uri = base_uri.dup
+      uri.path = path
+      parse_html(uri.to_s) do |doc|
+        select = doc.css("#article_ddl").first
+        links = {}
+        {}.tap do |result|
+          select.css("optgroup").each do |group|
+            sub_section = group.attribute("label").value
+            group.css("option").each do |option|
+              link = option.attribute('value').value.split('/')[-2, 2].join('/')
+              title = option.text
+              result[{:link => link, :title => title}] = sub_section
+            end
+          end
+        end.collect{|k, v| k[:sub_section] = v; k}
+      end
+    end
+
     def date_str
       # Treat HKT 5AM as a new day
       @date_str ||= (Time.now.utc - 5 * 3600).strftime('%Y%m%d')
