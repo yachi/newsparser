@@ -44,6 +44,20 @@ module Newsparser
       end
     end
 
+    def article(article_id)
+      path = "/news/art/#{article_id}"
+      uri = base_uri.dup
+      uri.path = path
+      parse_html(uri.to_s) do |doc|
+        content = doc.css("#articleContent").first
+        {}.tap do |result|
+          result[:media] = doc.to_s.scan(/url ?: ?'(.*?\.mp4)'/).flatten
+          result[:title] = content.css('h1').first.text.strip
+          result[:content] = content.css('#masterContent').inner_html.strip
+        end
+      end
+    end
+
     def date_str
       # Treat HKT 5AM as a new day
       @date_str ||= (Time.now.utc - 5 * 3600).strftime('%Y%m%d')
