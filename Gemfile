@@ -1,7 +1,7 @@
 source :rubygems
 
 # Specify your gem's dependencies in newsparser.gemspec
-gemspec
+# gemspec
 gem "nokogiri"
 gem "httparty"
 gem "sinatra"
