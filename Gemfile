@@ -12,4 +12,5 @@ group :development, :test do
   gem "racksh"
   gem "awesome_print"
   gem "hirb"
+  gem "hirb-unicode"
 end
