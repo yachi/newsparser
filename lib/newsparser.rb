@@ -1,7 +1,6 @@
 require 'rubygems'
-require 'uri'
-require 'nokogiri'
-require 'httparty'
+require 'bundler/setup'
+Bundler.require(:default)
 require 'iconv'
 
 require "newsparser/version"

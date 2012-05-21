@@ -1,9 +1,10 @@
+require 'rubygems'
+require 'bundler/setup'
+Bundler.require(:default)
+
 require 'newsparser'
 require 'newsparser/mingpao'
 
-require 'sinatra/base'
-require 'oj'
-require 'multi_json'
 require 'api/mingpao'
 
 module Api
