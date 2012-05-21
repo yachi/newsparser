@@ -55,7 +55,8 @@ module Newsparser
     end
 
     def get_url(url, options)
-      options[:headers] = {"Cookie" => "FREE_TOKEN=1"}
+      options[:headers] ||= {}
+      options[:headers]["Cookie"] ="FREE_TOKEN=1"
       super(url, options)
     end
   end
