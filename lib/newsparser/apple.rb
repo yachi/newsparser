@@ -45,7 +45,7 @@ module Newsparser
     end
 
     def article(article_id)
-      path = "/news/art/#{article_id}"
+      path = "/news/art/#{date_str}/#{article_id}"
       uri = base_uri.dup
       uri.path = path
       parse_html(uri.to_s) do |doc|
