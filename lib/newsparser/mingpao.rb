@@ -5,10 +5,10 @@ module Newsparser
 
     def sections(date_str=nil, section="main.htm")
       date_str ||= today_str
-      result = returning([]) do |result|
+      result = [].tap do |result|
         parse_html(BASE_URL + "#{date_str}/#{section}", {:charset => CHARSET}) do |doc|
           doc.css("#rlink > a").each do |a_tag|
-            result << returning({}) do |hash|
+            result << {}.tap do |hash|
               hash[:link] = a_tag["href"]
               hash[:title] = a_tag.content
             end
@@ -22,11 +22,11 @@ module Newsparser
 
     def sub_sections(date_str=nil, section="gaindex.htm")
       date_str ||= today_str
-      result = returning([]) do |result|
+      result = [].tap do |result|
         link = article_link(date_str, section)
         parse_html(BASE_URL + "#{date_str}/#{link}", {:charset => CHARSET}) do |doc|
           doc.css("#menu1 > option").each do |option|
-            result << returning({}) do |hash|
+            result << {}.tap do |hash|
               hash[:link] = option["value"]
               hash[:title] = option.content
             end
@@ -37,7 +37,7 @@ module Newsparser
 
     def article(date_str=nil, section="gaa1.htm")
       date_str ||= today_str
-      result = returning({}) do |result|
+      result = {}.tap do |result|
         parse_html(BASE_URL + "#{date_str}/#{section}", {:charset => CHARSET}) do |doc|
           doc.css("h1").each do |h1|
             result[:title] = h1.content

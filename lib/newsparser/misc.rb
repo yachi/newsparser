@@ -1,6 +1,6 @@
 class Object
-  def returning(value)
+  def tap(value)
     yield(value)
     value
-  end unless defined?(returning)
+  end unless defined?(tap)
 end
