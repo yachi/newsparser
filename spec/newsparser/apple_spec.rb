@@ -35,11 +35,14 @@ describe Newsparser::Apple do
     end
   end
 
-  describe "#sub_sections" do
+  describe "#article" do
     it "returns a hash with media, title, content" do
       apple = Newsparser::Apple.new
       result = apple.article('20120521/16354644')
-      Nokogiri::HTML(result[:content])
+      result.should be_kind_of Hash
+      result[:content].should be_kind_of(String)
+      result[:media].should be_kind_of(Array)
+      result[:title].should be_kind_of(String)
     end
   end
 end
