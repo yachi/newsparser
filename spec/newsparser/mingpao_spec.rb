@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Newsparser do
+describe Newsparser::Mingpao do
   describe "#sections" do
     it "returns a hash with links and sections" do
       mingpao = Newsparser::Mingpao.new
