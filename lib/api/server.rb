@@ -16,5 +16,14 @@ module Api
     configure do
       enable :cross_origin
     end
+
+    before do
+      if request.request_method == 'OPTIONS'
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET"
+
+        halt 200
+      end
+    end
   end
 end
