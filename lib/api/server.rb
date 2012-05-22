@@ -21,6 +21,7 @@ module Api
       if request.request_method == 'OPTIONS'
         response.headers["Access-Control-Allow-Origin"] = "*"
         response.headers["Access-Control-Allow-Methods"] = "GET"
+        response.headers["Access-Control-Allow-Headers"] = "X-Requested-With"
 
         halt 200
       end
