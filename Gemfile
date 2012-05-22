@@ -5,6 +5,7 @@ source :rubygems
 gem "nokogiri"
 gem "httparty"
 gem "sinatra"
+gem "sinatra-cross_origin"
 gem "multi_json"
 gem "oj"
 group :development, :test do

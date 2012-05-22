@@ -12,5 +12,9 @@ module Api
   class Server < Sinatra::Base
     include Api::Mingpao
     include Api::Apple
+
+    configure do
+      enable :cross_origin
+    end
   end
 end
