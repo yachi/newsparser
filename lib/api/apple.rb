@@ -9,7 +9,6 @@ module Api
         end
 
         get '/api/apple/sections' do
-          content_type :json
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
           @result = @apple.sections
@@ -17,7 +16,6 @@ module Api
         end
 
         get '/api/apple/subsections/:sub' do
-          content_type :json
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
           @result = @apple.sub_sections(params[:sub])
@@ -25,7 +23,6 @@ module Api
         end
 
         get '/api/apple/articles/:art' do
-          content_type :json
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
           @result = @apple.article(params[:art])
