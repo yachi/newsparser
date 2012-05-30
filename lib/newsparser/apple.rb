@@ -60,7 +60,7 @@ module Newsparser
 
     def date_str
       # Treat HKT 5AM as a new day
-      @date_str ||= (Time.now.utc - 5 * 3600).strftime('%Y%m%d')
+      @date_str ||= (Time.now.utc + 5 * 3600).strftime('%Y%m%d')
     end
     private
 
