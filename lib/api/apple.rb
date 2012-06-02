@@ -8,6 +8,10 @@ module Api
           end
         end
 
+        before do
+          cache_control :public, :must_revalidate, :max_age => 3600
+        end
+
         get '/api/apple/sections' do
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
