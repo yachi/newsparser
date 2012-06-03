@@ -18,6 +18,3 @@ gem "sinatra-cross_origin", :git => "https://github.com/britg/sinatra-cross_orig
 gem "multi_json"
 gem "oj"
 gem "dalli"
-
-# API logging
-gem "sentry-raven", :git => "https://github.com/coderanger/raven-ruby.git"
