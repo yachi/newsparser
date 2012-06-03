@@ -37,6 +37,28 @@ module Api
       end
     end
 
+    before do
+      keys = request.path.split('/')
+      keys << ['d', params['d']]
+      @_cache_key = keys.join('/')
+
+      if value = settings.cache.get(@_cache_key)
+        logger.info 'got cache with key: ' << @_cache_key
+        @_cache_exists = true
+        @result = value
+      end
+    end
+
+    after do
+      if response.status == 200
+        cache_control :public, :must_revalidate, :max_age => 3600
+      end
+      unless @_cache_exists
+        logger.info 'setting cache with key: ' << @_cache_key
+        settings.cache.set(@_cache_key, @result)
+      end
+    end
+
     use Rack::Logger
     helpers do
       def logger

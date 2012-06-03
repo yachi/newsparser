@@ -11,21 +11,21 @@ module Api
         get '/api/mingpao/sections' do
           content_type :json
           @mingpao = Newsparser::Mingpao.new
-          @result = @mingpao.sections(params['d'])
+          @result ||= @mingpao.sections(params['d'])
           render_result
         end
 
         get '/api/mingpao/subsections/:sub' do
           content_type :json
           @mingpao = Newsparser::Mingpao.new
-          @result = @mingpao.sub_sections(params['d'], params[:sub])
+          @result ||= @mingpao.sub_sections(params['d'], params[:sub])
           render_result
         end
 
         get '/api/mingpao/articles/:art' do
           content_type :json
           @mingpao = Newsparser::Mingpao.new
-          @result = @mingpao.article(params['d'], params[:art])
+          @result ||= @mingpao.article(params['d'], params[:art])
           render_result
         end
       end
