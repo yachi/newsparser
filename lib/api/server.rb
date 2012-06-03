@@ -26,9 +26,9 @@ module Api
     configure do
       enable :cross_origin
       if ENV['MEMCACHE_SERVERS']
-        logger.info ENV['MEMCACHE_SERVERS']
-        logger.info ENV['MEMCACHE_USERNAME']
-        logger.info ENV['MEMCACHE_PASSWORD']
+        puts ENV['MEMCACHE_SERVERS']
+        puts ENV['MEMCACHE_USERNAME']
+        puts ENV['MEMCACHE_PASSWORD']
         set :cache, Dalli::Client.new( ENV['MEMCACHE_SERVERS'],
                                        :username => ENV['MEMCACHE_USERNAME'],
                                        :password => ENV['MEMCACHE_PASSWORD'],
