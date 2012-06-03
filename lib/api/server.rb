@@ -33,6 +33,7 @@ module Api
                                        :username => ENV['MEMCACHE_USERNAME'],
                                        :password => ENV['MEMCACHE_PASSWORD'],
                                        :expires_in => 3600 * 24)
+        puts "finished setting memcache settings"
       else
         set :cache, Dalli::Client.new
       end
@@ -48,25 +49,31 @@ module Api
     end
 
     before do
+      puts "start cache key block"
       keys = request.path.split('/')
       keys << ['d', params['d']]
       @_cache_key = keys.join('/')
+      puts "finished cache key block"
 
+      puts "start get cache block"
       if value = settings.cache.get(@_cache_key)
         logger.info 'got cache with key: ' << @_cache_key
         @_cache_exists = true
         @result = value
       end
+      puts "finished get cache block"
     end
 
     after do
       if response.status == 200
         cache_control :public, :must_revalidate, :max_age => 3600
       end
+      puts "start set cache block"
       unless @_cache_exists
         logger.info 'setting cache with key: ' << @_cache_key
         settings.cache.set(@_cache_key, @result)
       end
+      puts "finished set cache block"
     end
   end
 end
