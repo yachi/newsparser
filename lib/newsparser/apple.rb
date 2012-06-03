@@ -25,22 +25,48 @@ module Newsparser
     end
 
     def sub_sections(section)
-      path = "/#{section}/index/#{date_str}/"
       uri = base_uri.dup
-      uri.path = path
-      parse_html(uri.to_s) do |doc|
-        select = doc.css("#article_ddl").first
-        links = {}
-        {}.tap do |result|
-          select.css("optgroup").each do |group|
-            sub_section = group.attribute("label").value
-            group.css("option").each do |option|
-              link = option.attribute('value').value.split('/')[-2, 2].join('/')
-              title = option.text
-              result[{:link => link, :title => title}] = sub_section
+      if section == 'supplement'
+        path = "/archive/index/#{date_str}/"
+        uri.path = path
+        result = []
+        parse_html(uri.to_s) do |doc|
+          doc.css("#tab2 .category").each do |category_dom|
+            title_dom = category_dom.next_element
+            sub_sections_dom = title_dom.next_element
+
+            category = category_dom.text
+            title = title_dom.text
+            sub_sections = sub_sections_dom.css('li a').each do |x|
+              unless dom_class = x.attribute('class') and dom_class.value == 'icon_ArchiveVideo'
+                result << {}.tap do |item|
+                  item[:title] = x.text
+                  item[:link] = x.attribute('href').value.split('/')[-2, 2].join('/')
+                  item[:sub_section] = title
+                  item[:section] = category
+                end
+              end
             end
           end
-        end.collect{|k, v| k[:sub_section] = v; k}
+        end
+        return result
+      else
+        path = "/#{section}/index/#{date_str}/"
+        uri.path = path
+        parse_html(uri.to_s) do |doc|
+          select = doc.css("#article_ddl").first
+          links = {}
+          {}.tap do |result|
+            select.css("optgroup").each do |group|
+              sub_section = group.attribute("label").value
+              group.css("option").each do |option|
+                link = option.attribute('value').value.split('/')[-2, 2].join('/')
+                title = option.text
+                result[{:link => link, :title => title}] = sub_section
+              end
+            end
+          end.collect{|k, v| k[:sub_section] = v; k}
+        end
       end
     end
 
