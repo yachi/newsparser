@@ -9,6 +9,4 @@ if ENV['RACK_ENV'] == "development"
   Object.send :include, Hirb::Console
 end
 
-Raven.capture do
-  run Api::Server
-end
+run Api::Server
