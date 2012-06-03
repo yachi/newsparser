@@ -4,10 +4,6 @@ source :rubygems
 # gemspec
 gem "nokogiri"
 gem "httparty"
-gem "sinatra"
-gem "sinatra-cross_origin", :git => "https://github.com/britg/sinatra-cross_origin.git"
-gem "multi_json"
-gem "oj"
 group :development, :test do
   gem "rspec"
   gem "racksh"
@@ -15,3 +11,10 @@ group :development, :test do
   gem "hirb"
   gem "hirb-unicode"
 end
+
+# API
+gem "sinatra"
+gem "sinatra-cross_origin", :git => "https://github.com/britg/sinatra-cross_origin.git"
+gem "multi_json"
+gem "oj"
+gem "dalli"
