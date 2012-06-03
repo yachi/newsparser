@@ -16,9 +16,19 @@ module Api
 
     register Sinatra::CrossOrigin
 
+    use Rack::Logger
+    helpers do
+      def logger
+        request.logger
+      end
+    end
+
     configure do
       enable :cross_origin
       if ENV['MEMCACHE_SERVERS']
+        logger.info ENV['MEMCACHE_SERVERS']
+        logger.info ENV['MEMCACHE_USERNAME']
+        logger.info ENV['MEMCACHE_PASSWORD']
         set :cache, Dalli::Client.new( ENV['MEMCACHE_SERVERS'],
                                        :username => ENV['MEMCACHE_USERNAME'],
                                        :password => ENV['MEMCACHE_PASSWORD'],
@@ -56,13 +66,6 @@ module Api
       unless @_cache_exists
         logger.info 'setting cache with key: ' << @_cache_key
         settings.cache.set(@_cache_key, @result)
-      end
-    end
-
-    use Rack::Logger
-    helpers do
-      def logger
-        request.logger
       end
     end
   end
