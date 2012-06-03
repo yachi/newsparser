@@ -69,7 +69,7 @@ module Api
         cache_control :public, :must_revalidate, :max_age => 3600
       end
       puts "start set cache block"
-      unless @_cache_exists
+      unless @_cache_exists and @_cache_key
         logger.info 'setting cache with key: ' << @_cache_key
         settings.cache.set(@_cache_key, @result)
       end
