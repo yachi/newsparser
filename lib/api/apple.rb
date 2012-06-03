@@ -8,8 +8,10 @@ module Api
           end
         end
 
-        before do
-          cache_control :public, :must_revalidate, :max_age => 3600
+        after do
+          if response.status == 200
+            cache_control :public, :must_revalidate, :max_age => 3600
+          end
         end
 
         get '/api/apple/sections' do
