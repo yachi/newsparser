@@ -51,7 +51,7 @@ module Api
     before do
       puts "start cache key block"
       keys = request.path.split('/')
-      keys << ['d', params['d']]
+      keys << ['d', params['d'].to_s]
       @_cache_key = keys.join('/')
       puts "finished cache key block"
 
