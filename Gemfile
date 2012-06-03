@@ -20,4 +20,4 @@ gem "oj"
 gem "dalli"
 
 # API logging
-gem "sentry-raven"
+gem "sentry-raven", :git => "https://github.com/coderanger/raven-ruby.git"
