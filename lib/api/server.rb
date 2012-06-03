@@ -3,6 +3,8 @@ require 'bundler'
 Bundler.require(:default)
 require 'sinatra/cross_origin'
 
+require 'api/server/run_later'
+
 require 'newsparser'
 require 'newsparser/mingpao'
 
@@ -22,6 +24,7 @@ module Api
         request.logger
       end
     end
+    helpers Sinatra::RunLater::InstanceMethods
 
     configure do
       enable :cross_origin

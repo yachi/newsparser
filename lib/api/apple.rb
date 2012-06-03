@@ -12,6 +12,16 @@ module Api
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
           @result ||= @apple.sections
+          table @result
+          @result.each do |result|
+            run_later do
+              host = "http://#{request.host}:#{request.port}"
+              path = "/api/apple/subsections/#{result[:link]}"
+              uri = URI.join(host, path)
+              uri.query = "d=#{@apple.date_str}"
+              HTTParty.get(uri.to_s)
+            end
+          end
           render_result
         end
 
@@ -19,6 +29,16 @@ module Api
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
           @result ||= @apple.sub_sections(params[:sub])
+          table @result
+          @result.each do |result|
+            run_later do
+              host = "http://#{request.host}:#{request.port}"
+              path = "/api/apple/articles/#{result[:link].split('/')[1]}"
+              uri = URI.join(host, path)
+              uri.query = "d=#{@apple.date_str}"
+              HTTParty.get(uri.to_s)
+            end
+          end
           render_result
         end
 
