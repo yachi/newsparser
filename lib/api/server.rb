@@ -16,6 +16,7 @@ module Api
 
     register Sinatra::CrossOrigin
 
+    require 'raven'
     use Raven::Rack
     use Rack::Logger
     helpers do
