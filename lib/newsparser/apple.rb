@@ -75,7 +75,7 @@ module Newsparser
       uri = base_uri.dup
       uri.path = path
       parse_html(uri.to_s) do |doc|
-        content = doc.css("#masterContent").first
+        content = doc.css(".content").first
         {}.tap do |result|
           result[:media] = doc.to_s.scan(/url ?: ?'(.*?\.mp4)'/).flatten
           result[:title] = content.css('h1').first.text.strip
