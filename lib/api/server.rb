@@ -61,6 +61,8 @@ module Api
 
     after do
       if response.status == 200
+        headers = response.headers.select{|k, v| k.is_a?(String) and v.is_a?(String)}.sort
+        headers.each {|x| puts x.inspect}
         cache_control :public, :must_revalidate, :max_age => 3600
       end
       if !@_cache_exists and @_cache_key and @result
