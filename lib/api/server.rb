@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'bundler'
 Bundler.require(:default)
-require 'sinatra/cross_origin'
 
 require 'api/server/run_later'
 
@@ -16,8 +15,6 @@ module Api
     include Api::Mingpao
     include Api::Apple
 
-    register Sinatra::CrossOrigin
-
     use Rack::Logger
     helpers do
       def logger
@@ -27,7 +24,6 @@ module Api
     helpers Sinatra::RunLater::InstanceMethods
 
     configure do
-      enable :cross_origin
       if ENV['MEMCACHE_SERVERS']
         set :cache, Dalli::Client.new( ENV['MEMCACHE_SERVERS'],
                                        :username => ENV['MEMCACHE_USERNAME'],
@@ -40,11 +36,10 @@ module Api
     end
 
     before do
-      if request.request_method == 'OPTIONS'
-        cross_origin({:allow_origin => "*"})
-        response.headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type X-Requested-With X-CSRF-Token}.join(",")
-        halt 200
-      end
+      response.headers["Access-Control-Allow-Origin"]  = "*"
+      response.headers["Access-Control-Allow-Methods"] = %w{GET POST PUT DELETE}.join(",")
+      response.headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type X-Requested-With X-CSRF-Token}.join(",")
+      halt 200 if request.request_method == 'OPTIONS'
     end
 
     before do

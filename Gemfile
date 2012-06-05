@@ -14,7 +14,6 @@ end
 
 # API
 gem "sinatra"
-gem "sinatra-cross_origin", :git => "https://github.com/britg/sinatra-cross_origin.git"
 gem "multi_json"
 gem "oj"
 gem "dalli"
