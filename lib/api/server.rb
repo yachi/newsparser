@@ -41,7 +41,7 @@ module Api
 
     before do
       if request.request_method == 'OPTIONS'
-        cross_origin
+        cross_origin({:allow_origin => "*"})
         response.headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type X-Requested-With X-CSRF-Token}.join(",")
         halt 200
       end
@@ -61,8 +61,6 @@ module Api
 
     after do
       if response.status == 200
-        headers = response.headers.select{|k, v| k.is_a?(String) and v.is_a?(String)}.sort
-        headers.each {|x| puts x.inspect}
         cache_control :public, :must_revalidate, :max_age => 3600
       end
       if !@_cache_exists and @_cache_key and @result
