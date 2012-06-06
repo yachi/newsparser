@@ -39,7 +39,6 @@ module Api
       response.headers["Access-Control-Allow-Origin"]  = "*"
       response.headers["Access-Control-Allow-Methods"] = %w{GET POST PUT DELETE}.join(",")
       response.headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type Cache-Control X-Requested-With X-CSRF-Token}.join(",")
-      cache_control :public, :max_age => 24 * 3600 * 7
       halt 200 if request.request_method == 'OPTIONS'
     end
 
