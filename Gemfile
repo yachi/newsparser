@@ -1,9 +1,7 @@
 source :rubygems
 
 # Specify your gem's dependencies in newsparser.gemspec
-# gemspec
-gem "nokogiri"
-gem "httparty"
+gemspec
 group :development, :test do
   gem "rspec"
   gem "racksh"
@@ -11,9 +9,3 @@ group :development, :test do
   gem "hirb"
   gem "hirb-unicode"
 end
-
-# API
-gem "sinatra"
-gem "multi_json"
-gem "oj"
-gem "dalli"
