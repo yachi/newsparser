@@ -1,14 +1,3 @@
-PATH
-  remote: .
-  specs:
-    newsparser (0.0.3)
-      dalli
-      httparty
-      multi_json
-      nokogiri
-      oj
-      sinatra
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -54,8 +43,13 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  dalli
   hirb
   hirb-unicode
-  newsparser!
+  httparty
+  multi_json
+  nokogiri
+  oj
   racksh
   rspec
+  sinatra
