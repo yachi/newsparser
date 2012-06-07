@@ -10,6 +10,8 @@ require 'newsparser/mingpao'
 require 'api/mingpao'
 require 'api/apple'
 
+require 'dalli'
+
 module Api
   class Server < Sinatra::Base
     include Api::Mingpao

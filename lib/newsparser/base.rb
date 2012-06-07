@@ -1,3 +1,5 @@
+require 'httparty'
+require 'nokogiri'
 module Newsparser
   class Base
     include HTTParty
