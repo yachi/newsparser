@@ -8,5 +8,7 @@ if ENV['RACK_ENV'] == "development"
   require 'hirb-unicode'
   Object.send :include, Hirb::Console
 end
-use Rack::Deflater
-run Api::Server
+map '/api' do
+  use Rack::Deflater
+  run Api::Server
+end
