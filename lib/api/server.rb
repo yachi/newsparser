@@ -26,10 +26,10 @@ module Api
     helpers Sinatra::RunLater::InstanceMethods
 
     configure do
-      if ENV['MEMCACHE_SERVERS']
-        set :cache, Dalli::Client.new( ENV['MEMCACHE_SERVERS'],
-                                       :username => ENV['MEMCACHE_USERNAME'],
-                                       :password => ENV['MEMCACHE_PASSWORD'],
+      if ENV['MEMCACHIER_SERVERS']
+        set :cache, Dalli::Client.new( ENV['MEMCACHIER_SERVERS'],
+                                       :username => ENV['MEMCACHIER_USERNAME'],
+                                       :password => ENV['MEMCACHIER_PASSWORD'],
                                        :expires_in => 3600 * 24)
       else
         set :cache, Dalli::Client.new
