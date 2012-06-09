@@ -102,7 +102,11 @@ module Newsparser
       parse_html(uri.to_s) do |doc|
         content = doc.css(".content").first
         {}.tap do |result|
-          result[:media] = doc.to_s.scan(/url ?: ?'(.*?\.mp4)'/).flatten
+          video_link = doc.to_s.scan(/url ?: ?'(.*?\.mp4)'/).flatten.first
+          if !video_link and youtube_id = doc.to_s.scan(%r(value="http://www.youtube.com/v/(.*?)\?)).flatten.first
+            video_link = "http://www.youtube.com/watch?v=#{youtube_id}"
+          end
+          result[:media] = {:url => video_link}
           result[:title] = content.css('h1').first.text.strip
           result[:content] = content.css('#masterContent').inner_html.strip
         end
