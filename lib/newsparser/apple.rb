@@ -9,10 +9,12 @@ module Newsparser
       "entertainment"=>"娛樂名人",
       "financeestate"=>"財經地產",
       "sports"=>"體育",
-      "supplement"=>"副刊"
+      "supplement"=>"副刊",
+      "realtime"=>"即時新聞",
     }
 
     attr_accessor :date_str
+    attr_accessor :s_id
 
     def sections
       return SECTIONS.collect{|k, v| {:link => k, :title => v}}
@@ -50,6 +52,29 @@ module Newsparser
           end
         end
         return result
+      elsif section == "realtime"
+        path = "/realtime/index/"
+        uri.path = path
+        parse_html(uri.to_s) do |doc|
+          sections = doc.css('.LHSContent_Tab a').collect do |section|
+            section_id = section.attribute('href').to_s.scan(/\('(.*?)'\)/).flatten.first
+            section_name = section.text
+            {:section_id => section_id, :section_name => section_name}
+          end
+          results = sections.collect do |section|
+            path = "/realtime/realtimelist/#{section[:section_id]}"
+            uri.path = path
+            result = parse_html(uri.to_s) do |item|
+              item.css('.RTitemRHS .text a').collect do |a|
+                link = a.attribute('href').value.split(%r(/))[-2, 2].join('/')
+                title = a.text
+                {:link => link, :title => title, :sub_section => section[:section_name]}
+              end
+            end
+          end
+          results.flatten!
+          return results
+        end
       else
         path = "/#{section}/index/#{date_str}/"
         uri.path = path
@@ -71,7 +96,7 @@ module Newsparser
     end
 
     def article(article_id)
-      path = "/news/art/#{date_str}/#{article_id}"
+      path = "/#{s_id}/art/#{date_str}/#{article_id}"
       uri = base_uri.dup
       uri.path = path
       parse_html(uri.to_s) do |doc|
