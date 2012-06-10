@@ -27,7 +27,7 @@ module Api
         get '/apple/subsections/:sub' do
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
-          @result ||= @apple.sub_sections(params[:sub])
+          @result ||= @apple.sub_sections(params['sub'])
           @result.each do |result|
             run_later do
               host = "http://#{request.host}:#{request.port}"

@@ -42,7 +42,6 @@ module Api
       response.headers["Access-Control-Allow-Methods"] = %w{GET POST PUT DELETE}.join(",")
       response.headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type Cache-Control X-Requested-With X-CSRF-Token}.join(",")
       if request.request_method == 'OPTIONS'
-        cache_control :public, :max_age => 24 * 3600 * 7
         halt 200
       end
     end
@@ -52,20 +51,24 @@ module Api
       keys << ['d', params['d'].to_s]
       @_cache_key = keys.join('/')
 
-      if value = settings.cache.get(@_cache_key)
-        logger.info 'got cache with key: ' << @_cache_key
-        @_cache_exists = true
-        @result = value
+      unless @_cache_key[/realtime/]
+        if value = settings.cache.get(@_cache_key)
+          logger.info 'got cache with key: ' << @_cache_key
+          @_cache_exists = true
+          @result = value
+        end
       end
     end
 
     after do
-      if response.status == 200
-        cache_control :public, :max_age => 3600 * 24
-      end
-      if !@_cache_exists and @_cache_key and @result
-        logger.info 'setting cache with key: ' << @_cache_key
-        settings.cache.set(@_cache_key, @result)
+      unless @_cache_key[/realtime/]
+        if response.status == 200
+          cache_control :public, :max_age => 3600 * 24
+        end
+        if !@_cache_exists and @_cache_key and @result
+          logger.info 'setting cache with key: ' << @_cache_key
+          settings.cache.set(@_cache_key, @result)
+        end
       end
     end
   end
