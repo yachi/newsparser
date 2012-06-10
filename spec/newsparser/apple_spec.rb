@@ -47,11 +47,24 @@ describe Newsparser::Apple do
     it "returns a hash with media, title, content" do
       apple = Newsparser::Apple.new
       apple.date_str='20120521'
+      apple.s_id = 'news'
       result = apple.article('16354644')
       result.should be_kind_of Hash
       result[:content].should be_kind_of(String)
-      result[:media].should be_kind_of(Array)
+      result[:media].should be_kind_of(Hash)
       result[:title].should be_kind_of(String)
+    end
+
+    context "supplement article" do
+      it "returns a hash with title, content" do
+        apple = Newsparser::Apple.new
+        apple.date_str = '20120610'
+        apple.s_id = 'supplement'
+        result = apple.article('16411943')
+        result.should be_kind_of Hash
+        result[:content].should be_kind_of(String)
+        result[:title].should be_kind_of(String)
+      end
     end
   end
 end

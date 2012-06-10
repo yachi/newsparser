@@ -96,6 +96,7 @@ module Newsparser
     end
 
     def article(article_id)
+      self.s_id = 'news' if s_id == 'supplement'
       path = "/#{s_id}/art/#{date_str}/#{article_id}"
       uri = base_uri.dup
       uri.path = path
