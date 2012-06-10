@@ -107,9 +107,11 @@ module Newsparser
           if !video_link and youtube_id = doc.to_s.scan(%r(value="http://www.youtube.com/v/(.*?)\?)).flatten.first
             video_link = "http://www.youtube.com/watch?v=#{youtube_id}"
           end
+          photo = content.css('.photo').to_s
           result[:media] = {:url => video_link} if video_link
+          result[:photo] = ''
           result[:title] = content.css('h1').first.text.strip
-          result[:content] = content.css('#masterContent').inner_html.strip
+          result[:content] = photo << content.css('#masterContent').inner_html.strip
         end
       end
     end
