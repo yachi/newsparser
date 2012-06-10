@@ -72,7 +72,7 @@ describe Newsparser::Apple do
         apple = Newsparser::Apple.new
         apple.date_str = '20120610'
         apple.s_id = 'realtime'
-        result = apple.article('50091430')
+        result = apple.article('50091526')
         result.should be_kind_of Hash
         result[:content].should be_kind_of(String)
         result[:title].should be_kind_of(String)

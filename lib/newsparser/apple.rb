@@ -109,6 +109,7 @@ module Newsparser
             video_link = "http://www.youtube.com/watch?v=#{youtube_id}"
           end
           photo = content.css('.photo').to_s
+          photo = "" if photo[/video_player/]
           result[:media] = {:url => video_link} if video_link
           result[:photo] = ''
           result[:title] = content.css('h1').first.text.strip
