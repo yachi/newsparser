@@ -33,7 +33,7 @@ module Api
               host = "http://#{request.host}:#{request.port}"
               path = "/api/apple/articles/#{result[:link].split('/')[1]}"
               uri = URI.join(host, path)
-              uri.query = "d=#{@apple.date_str}"
+              uri.query = "d=#{result[:link].split('/')[0]}&s=#{result[:section]}"
               HTTParty.get(uri.to_s)
             end
           end
