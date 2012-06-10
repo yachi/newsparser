@@ -31,9 +31,10 @@ module Api
           @result.each do |result|
             run_later do
               host = "http://#{request.host}:#{request.port}"
-              path = "/api/apple/articles/#{result[:link].split('/')[1]}"
+              date_str, article_id = result[:link].split('/')
+              path = "/api/apple/articles/#{article_id}"
               uri = URI.join(host, path)
-              uri.query = "d=#{result[:link].split('/')[0]}&s=#{result[:section]}"
+              uri.query = "d=#{date_str}&s=#{result[:section_id]}"
               HTTParty.get(uri.to_s)
             end
           end

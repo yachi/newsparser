@@ -46,6 +46,7 @@ module Newsparser
                   item[:link] = x.attribute('href').value.split('/')[-2, 2].join('/')
                   item[:sub_section] = title
                   item[:section] = category
+                  item[:section_id] = 'supplement'
                 end
               end
             end
@@ -68,7 +69,7 @@ module Newsparser
               item.css('.RTitemRHS .text a').collect do |a|
                 link = a.attribute('href').value.split(%r(/))[-2, 2].join('/')
                 title = a.text
-                {:link => link, :title => title, :sub_section => section[:section_name], :section => 'realtime'}
+                {:link => link, :title => title, :sub_section => section[:section_name], :section_id => 'realtime'}
               end
             end
           end
@@ -90,7 +91,7 @@ module Newsparser
                 result[{:link => link, :title => title}] = sub_section
               end
             end
-          end.collect{|k, v| k[:sub_section] = v; k[:section] = section; k}
+          end.collect{|k, v| k[:sub_section] = v; k[:section_id] = section; k}
         end
       end
     end
