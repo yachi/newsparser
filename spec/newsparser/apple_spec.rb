@@ -79,5 +79,34 @@ describe Newsparser::Apple do
         Nokogiri::HTML(result[:content]).css('.photo').count.should > 0
       end
     end
+
+    context "article that contains video" do
+      context "realtime" do
+        it "returns a hash with title, content" do
+          apple = Newsparser::Apple.new
+          apple.date_str = '20120612'
+          apple.s_id = 'realtime'
+          result = apple.article('50091823')
+          result.should be_kind_of Hash
+          result[:content].should be_kind_of(String)
+          result[:title].should be_kind_of(String)
+          result[:media].should be_kind_of(Hash)
+          result[:media][:url].should be_kind_of(String)
+        end
+      end
+      context "news" do
+        it "returns a hash with title, content" do
+          apple = Newsparser::Apple.new
+          apple.date_str = '20120612'
+          apple.s_id = 'news'
+          result = apple.article('16418488')
+          result.should be_kind_of Hash
+          result[:content].should be_kind_of(String)
+          result[:title].should be_kind_of(String)
+          result[:media].should be_kind_of(Hash)
+          result[:media][:url].should be_kind_of(String)
+        end
+      end
+    end
   end
 end
