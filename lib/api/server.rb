@@ -61,14 +61,17 @@ module Api
     end
 
     after do
-      unless @_cache_key[/realtime/]
-        if response.status == 200
-          cache_control :public, :max_age => 3600 * 24
-        end
-        if !@_cache_exists and @_cache_key and @result
-          logger.info 'setting cache with key: ' << @_cache_key
-          settings.cache.set(@_cache_key, @result)
-        end
+      if @_cache_key[/realtime/]
+        expires_in = 600
+      else
+        expires_in = 3600 + (rand * 600).to_i
+      end
+      if response.status == 200
+        cache_control :public, :max_age => 3600 * 24
+      end
+      if !@_cache_exists and @_cache_key and @result
+        logger.info 'setting cache with key: ' << @_cache_key
+        settings.cache.set(@_cache_key, @result, expires_in)
       end
     end
   end
