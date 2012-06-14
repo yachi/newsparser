@@ -45,6 +45,7 @@ module Api
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
           @apple.s_id = params['s'] if params['s'].to_s[/\w+/]
+          @apple.s_id ||= 'news'
           @result ||= @apple.article(params[:art])
           render_result
         end
