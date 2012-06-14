@@ -53,6 +53,7 @@ describe Newsparser::Apple do
       result[:content].should be_kind_of(String)
       result[:media].should be_kind_of(Hash)
       result[:title].should be_kind_of(String)
+      result[:original_url].should be_kind_of(String)
     end
 
     context "supplement article" do
@@ -64,6 +65,7 @@ describe Newsparser::Apple do
         result.should be_kind_of Hash
         result[:content].should be_kind_of(String)
         result[:title].should be_kind_of(String)
+        result[:original_url].should be_kind_of(String)
       end
     end
 
@@ -76,6 +78,7 @@ describe Newsparser::Apple do
         result.should be_kind_of Hash
         result[:content].should be_kind_of(String)
         result[:title].should be_kind_of(String)
+        result[:original_url].should be_kind_of(String)
         Nokogiri::HTML(result[:content]).css('.photo').count.should > 0
       end
     end
@@ -92,6 +95,7 @@ describe Newsparser::Apple do
           result[:title].should be_kind_of(String)
           result[:media].should be_kind_of(Hash)
           result[:media][:url].should be_kind_of(String)
+          result[:original_url].should be_kind_of(String)
         end
       end
       context "news" do
@@ -105,6 +109,7 @@ describe Newsparser::Apple do
           result[:title].should be_kind_of(String)
           result[:media].should be_kind_of(Hash)
           result[:media][:url].should be_kind_of(String)
+          result[:original_url].should be_kind_of(String)
         end
       end
     end
