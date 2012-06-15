@@ -67,7 +67,7 @@ module Api
         expires_in = 3600 + (rand * 600).to_i
       end
       if response.status == 200
-        cache_control :public, :max_age => 3600 * 24
+        cache_control :public, :max_age => expires_in
       end
       if !@_cache_exists and @_cache_key and @result
         logger.info 'setting cache with key: ' << @_cache_key
