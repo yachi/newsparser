@@ -110,6 +110,9 @@ module Newsparser
           end
           photo = content.css('.photo').to_s
           photo = "" if photo[/video_player/]
+          content.css('img').each do |img|
+            img.remove_attribute('width')
+          end
           result[:media] = {:url => video_link} if video_link
           result[:photo] = ''
           result[:title] = content.css('h1').first.text.strip
