@@ -114,14 +114,24 @@ describe Newsparser::Apple do
       end
     end
     context "article that contains parallel images" do
-      it "should have width removed in images" do
+      before :each do
         apple = Newsparser::Apple.new
         apple.date_str = '20120619'
         apple.s_id = 'news'
         result = apple.article('16438804')
-        content = Nokogiri::HTML(result[:content])
-        content.css('img').each do |img|
+        @content = Nokogiri::HTML(result[:content])
+      end
+      it "should have width removed in images" do
+        @content.css('img').each do |img|
           img.attribute('width').should be_nil
+        end
+      end
+      it "should be unwrapped from table" do
+        @content.css('img').each do |img|
+          pending "may look good for small images"
+          img.parent.parent.name.should_not == "td"
+          img.parent.parent.name.should_not == "tr"
+          img.parent.parent.name.should_not == "table"
         end
       end
     end
