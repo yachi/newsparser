@@ -117,7 +117,9 @@ module Newsparser
           result[:photo] = ''
           result[:title] = content.css('h1').first.text.strip
           result[:original_url] = "http://hk.apple.nextmedia.com/#{self.s_id}/art/#{self.date_str}/#{article_id}"
-          result[:content] = photo << content.css('#masterContent').inner_html.strip
+          article = content.css('#articleContent')
+          article.css('.LHSBorderBox').unlink
+          result[:content] = photo << article.inner_html.strip
           return result
         end
       end
