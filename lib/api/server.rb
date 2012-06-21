@@ -48,8 +48,9 @@ module Api
 
     before do
       keys = request.path.split('/')
-      keys << ['d', params['d'].to_s]
-      @_cache_key = keys.join('/')
+      keys << ['d', params['d'].to_s] if params['d']
+      keys << ['s', params['s'].to_s] if params['s']
+      @_cache_key = keys.flatten.join('/')
 
       unless @_cache_key[/realtime/]
         if value = settings.cache.get(@_cache_key)
