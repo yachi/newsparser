@@ -49,7 +49,6 @@ module Api
           @apple.s_id = params['s'] if params['s'].to_s[/\w+/]
           @apple.s_id ||= 'news'
           @result ||= @apple.article(params[:art])
-          etag @result.hash
           render_result
         end
       end
