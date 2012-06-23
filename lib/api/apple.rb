@@ -12,6 +12,7 @@ module Api
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
           @result ||= @apple.sections
+          etag @result.hash
           @result.each do |result|
             run_later do
               host = "http://#{request.host}:#{request.port}"
@@ -28,6 +29,7 @@ module Api
           @apple = Newsparser::Apple.new
           @apple.date_str = params['d'] if params['d'].to_s[/\d{8}/]
           @result ||= @apple.sub_sections(params['sub'])
+          etag @result.hash
           @result.each do |result|
             run_later do
               host = "http://#{request.host}:#{request.port}"
@@ -47,6 +49,7 @@ module Api
           @apple.s_id = params['s'] if params['s'].to_s[/\w+/]
           @apple.s_id ||= 'news'
           @result ||= @apple.article(params[:art])
+          etag @result.hash
           render_result
         end
       end
