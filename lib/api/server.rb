@@ -62,7 +62,7 @@ module Api
     end
 
     after do
-      if @_cache_key[/realtime/] or @_cache_key[/apple\/sections/]
+      if @_cache_key[/realtime/]
         expires_in = 600
       else
         expires_in = 3600 + (rand * 600).to_i
