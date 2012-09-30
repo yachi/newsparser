@@ -74,6 +74,7 @@ module Api
         logger.info 'setting cache with key: ' << @_cache_key
         settings.cache.set(@_cache_key, @result, expires_in)
       end
+      content_type 'application/json'
     end
   end
 end
