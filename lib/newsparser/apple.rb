@@ -103,6 +103,7 @@ module Newsparser
       uri.path = path
       parse_html(uri.to_s) do |doc|
         content = doc.css(".content").first
+        content.css(".artNav").remove
         {}.tap do |result|
           video_link = doc.to_s.scan(/(https?.*?\.mp4)/).flatten.first
           if !video_link and youtube_id = doc.to_s.scan(%r(value="http://www.youtube.com/v/(.*?)\?)).flatten.first

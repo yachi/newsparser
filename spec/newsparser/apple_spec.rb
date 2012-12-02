@@ -56,6 +56,19 @@ describe Newsparser::Apple do
       result[:original_url].should be_kind_of(String)
     end
 
+    it "returns a hash without photos in next article" do
+      apple = Newsparser::Apple.new
+      apple.date_str='20121202'
+      apple.s_id = 'news'
+      result = apple.article('18087795')
+      result.should be_kind_of Hash
+      result[:content].should be_kind_of(String)
+      result[:content].should_not match("http://static.apple.nextmedia.com/images/apple-photos/apple/20121202/small/02la3p1.jpg")
+      result[:media].should be_nil
+      result[:title].should be_kind_of(String)
+      result[:original_url].should be_kind_of(String)
+    end
+
     context "supplement article" do
       it "returns a hash with title, content" do
         apple = Newsparser::Apple.new
