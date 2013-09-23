@@ -7,7 +7,7 @@ gem "httparty"
 
 # API
 gem "sinatra"
-gem "oj"
+gem "yajl-ruby"
 gem "multi_json"
 gem "dalli"
 
