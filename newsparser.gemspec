@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
 
   # API dependencies
   s.add_dependency "sinatra"
-  s.add_dependency "yajl-ruby"
   s.add_dependency "multi_json"
   s.add_dependency "dalli"
 end
