@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 # Specify your gem's dependencies in newsparser.gemspec
 # gemspec
+gem 'rake'
 gem 'nokogiri'
 gem "httparty"
 

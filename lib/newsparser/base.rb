@@ -9,7 +9,7 @@ module Newsparser
       charset = options.delete(:charset)
       html = get_url(url, options)
       if charset
-        html = Iconv.iconv('utf-8//IGNORE', charset, html).join("")
+        html = html.encode("UTF-8", :invalid => :replace, :undef => :replace, :replace => "?")
       end
       yield(Nokogiri::HTML(html))
     end
