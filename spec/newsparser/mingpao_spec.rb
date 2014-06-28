@@ -7,7 +7,7 @@ describe Newsparser::Mingpao do
     it "returns a hash with links and sections" do
       mingpao = Newsparser::Mingpao.new
       gaa1_htm = IO.read("spec/htmls/gaa1.htm")
-      mingpao.stub(:get_url).and_return(gaa1_htm)
+      allow(mingpao).to receive(:get_url).and_return(gaa1_htm)
       result = mingpao.sections("20110718", "main.htm")
       # check only keys since values are chinese
       expect(result.first).to have_key(:link)
@@ -19,8 +19,8 @@ describe Newsparser::Mingpao do
     it "returns a hash with links and titles" do
       mingpao = Newsparser::Mingpao.new
       gaa1_htm = IO.read("spec/htmls/gaa1.htm")
-      mingpao.stub(:article_link).and_return('gaa1.htm')
-      mingpao.stub(:get_url).and_return(gaa1_htm)
+      allow(mingpao).to receive(:article_link).and_return('gaa1.htm')
+      allow(mingpao).to receive(:get_url).and_return(gaa1_htm)
       result = mingpao.sub_sections("20110718", "gaindex.htm")
       # check only keys since values are chinese
       expect(result.first).to have_key(:link)
@@ -32,7 +32,7 @@ describe Newsparser::Mingpao do
     it "returns a hash article title and content" do
       mingpao = Newsparser::Mingpao.new
       gaa1_htm = IO.read("spec/htmls/gaa1.htm")
-      mingpao.stub(:get_url).and_return(gaa1_htm)
+      allow(mingpao).to receive(:get_url).and_return(gaa1_htm)
       result = mingpao.article("20110718", "gaa1.htm")
       # check only keys since values are chinese
       expect(result).to have_key(:title)
