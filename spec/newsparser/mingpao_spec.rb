@@ -10,8 +10,8 @@ describe Newsparser::Mingpao do
       mingpao.stub(:get_url).and_return(gaa1_htm)
       result = mingpao.sections("20110718", "main.htm")
       # check only keys since values are chinese
-      result.first.should have_key(:link)
-      result.first.should have_value("gaindex.htm")
+      expect(result.first).to have_key(:link)
+      expect(result.first).to have_value("gaindex.htm")
     end
   end
 
@@ -23,8 +23,8 @@ describe Newsparser::Mingpao do
       mingpao.stub(:get_url).and_return(gaa1_htm)
       result = mingpao.sub_sections("20110718", "gaindex.htm")
       # check only keys since values are chinese
-      result.first.should have_key(:link)
-      result.first.should have_value("gaa1.htm")
+      expect(result.first).to have_key(:link)
+      expect(result.first).to have_value("gaa1.htm")
     end
   end
 
@@ -35,8 +35,8 @@ describe Newsparser::Mingpao do
       mingpao.stub(:get_url).and_return(gaa1_htm)
       result = mingpao.article("20110718", "gaa1.htm")
       # check only keys since values are chinese
-      result.should have_key(:title)
-      result.should have_key(:content)
+      expect(result).to have_key(:title)
+      expect(result).to have_key(:content)
     end
   end
 end
